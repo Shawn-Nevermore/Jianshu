@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id=x></div>
+
+
+
+    <script>
+
+        window.jQuery = function (nodeOrSelector) {
+            let nodes = {}
+
+            // 返回一个纯净的数组
+            if (typeof nodeOrSelector === "string") {
+                let temp = document.querySelectorAll(nodeOrSelector)
+                for (let i = 0; i < temp.length; i++) {
+                    nodes[i] = temp[i]
+                }
+                nodes.length = temp.length
+            } else if (nodeOrSelector instanceof Node) {
+                nodes = {
+                    0: nodeOrSelector,
+                    length: 1
+                }
+
+            }
+
+            // 同时添加多个类(classes可以是一个字符串，也可以是一个数组集合了需要添加的类)
+            nodes.addClass = function (classes) {
+
+                if (typeof classes === "string") {
+                    for (let i = 0; i < nodes.length; i++) {
+                        nodes[i].classList.add(classes)
+                    }
+                } else if (classes instanceof Array) {
+                    classes.forEach(value => {
+                        for (let i = 0; i < nodes.length; i++) {
+                            nodes[i].classList.add(value)
+                        }
+                    })
+                }
+            }
+
+            nodes.setText = function (text) {
+                for (let i = 0; i < nodes.length; i++) {
+                    nodes[i].textContent = text
+                }
+            }
+
+            return nodes
+        }
+
+        window.$ = jQuery
+
+        let $div = $('div')
+        console.log($div)
+        $div.addClass(['red', 'blue', 'green']) // 可将所有 div 的 class 添加一个 red
+        console.log($div.classList)
+        $div.setText('hidqwd') // 可将所有 div 的 textContent 变为 hi
+
+
+
+
+    </script>
+</body>
+
+</html>
